@@ -1,0 +1,21 @@
+.loading {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 1450px;
+  height: 690px;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+}
+.container{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  background-size: cover;
+}
+
+  

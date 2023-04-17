@@ -13,19 +13,19 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     platforms: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
     },
     img: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    date: {
+    released: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     rating: {
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     id: {
@@ -33,6 +33,11 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey:true,
+    },
+    createinDb: {
+      type: DataTypes.BOOLEAN,
+      allowNull:false,
+      defaultValue: true,
     }
-  });
+  },{timestamps:false});
 };
