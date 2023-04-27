@@ -1,4 +1,4 @@
-const { getVideogameById, getVideogameByName,createVideogame, getAllVideogames } = require("../controllers/videogamesController.js")
+const {getVideogameById, getVideogameByName,createVideogame, getAllVideogames } = require("../controllers/videogamesController.js")
 
 const getAllVideogamesHandler = async (req,res) => {
     const {name} = req.query;
@@ -11,12 +11,12 @@ const getAllVideogamesHandler = async (req,res) => {
 }
 
 const createVideogameHandler = async (req,res) => {
-    const { name, description,platforms, img, released, rating, genres } = req.body
+    const { name, description,platforms, image, released, rating, genres } = req.body
     try {
-        if(!name || !description || !platforms || !img || !released || !rating || !genres){
+        if(!name || !description || !platforms || !image || !released || !rating || !genres){
         throw Error ('Videogame information is missing')
         } else {
-            const newVideogame = await createVideogame(name,description,platforms,img,released,rating, genres)
+            const newVideogame = await createVideogame(name,description,platforms,image,released,rating, genres)
             res.status(200).json(newVideogame)
         }
         

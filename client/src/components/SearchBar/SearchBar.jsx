@@ -50,7 +50,7 @@ function SearchBar({setLoading,setCurrentPage}) {
           placeholder="Search videogame"
         ></input>
         <button className={style.button} onClick={e => handleSubmit(e)} type= 'submit'>Search</button>
-        <button className={style.button2} onClick={e => handleReset(e)}>Reset</button>
+        <button className={style.button} onClick={e => handleReset(e)}>Reset</button>
       </form>
     </div>
   );

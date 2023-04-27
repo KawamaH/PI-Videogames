@@ -4,10 +4,10 @@ import {
   GET_VIDEOGAME_DETAIL,
   GET_VIDEOGAME_NAME,
   GET_GENRES,
+  GET_PLATFORMS,
   FILTER_BY_SOURCE,
   FILTER_BY_GENRE,
-  FILTER_BY_ABC,
-  FILTER_BY_RATING,
+  ORDER_BY,
 } from "./actions";
 
 const initialState = {
@@ -15,6 +15,7 @@ const initialState = {
   allVideogames: [],
   videogameDetail: {},
   genres: [],
+  platforms: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -25,6 +26,11 @@ const rootReducer = (state = initialState, action) => {
         videogames: action.payload,
         allVideogames: action.payload,
       };
+    case GET_PLATFORMS:
+      return {
+        ...state,
+        platforms: action.payload,
+      };
     case GET_GENRES:
       return { ...state, genres: action.payload };
     case GET_VIDEOGAME_NAME:
@@ -33,61 +39,69 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, videogameDetail: action.payload };
     case CLEAR_DETAIL:
       return { ...state, videogameDetail: {} };
-    case FILTER_BY_SOURCE:
-      const allVideogames = state.allVideogames;
-      const filter =
-        action.payload === "created"
-          ? allVideogames.filter((v) => v.createInDb)
-          : allVideogames.filter((v) => !v.createInDb);
+    case ORDER_BY:
+      let stateCopy = [...state.allVideogames];
+      let order;
+      switch (action.payload) {
+        case "asc":
+          order = stateCopy.sort((a, b) => {
+            if (a.name > b.name) return -1;
+            if (a.name < b.name) return 1;
+            return 0;
+          });
+          console.log(order);
+          break;
+        case "des":
+          order = stateCopy.sort((a, b) => {
+            if (a.name > b.name) return 1;
+            if (a.name < b.name) return -1;
+            return 0;
+          });
+          break;
+        case "ratingAsc":
+          order = stateCopy.sort((a, b) => {
+            return a.rating - b.rating;
+          });
+          break;
+        case "ratingDes":
+          order = stateCopy.sort((a, b) => {
+            return b.rating - a.rating;
+          });
+          break;
+        default:
+          order = stateCopy;
+          break;
+      }
       return {
         ...state,
-        videogames: action.payload === "all" ? state.allVideogames : filter,
+        videogames: order,
+        allVideogames: order,
+      };
+    case FILTER_BY_SOURCE:
+      const allVideogames = [...state.allVideogames];
+      const filter =
+        action.payload === "created"
+          ? allVideogames.filter((v) => v.createinDb)
+          : allVideogames.filter((v) => !v.createinDb);
+      return {
+        ...state,
+        videogames: action.payload === "all" ? allVideogames : filter,
       };
     case FILTER_BY_GENRE:
-      const allVideogamesG = state.allVideogames;
+      const allVideogamesG = [...state.allVideogames];
       const filteredGenres =
         action.payload === "all"
-          ? state.allVideogames
-          : allVideogamesG.filter((g) => {
-              return g.genres.includes(action.payload);
+          ? allVideogamesG
+          : state.allVideogames.filter((g) => {
+              return !g.createinDb
+                ? g.genres.includes(action.payload)
+                : g.Genres.map((gen) => gen.name).includes(action.payload);
             });
-      console.log(allVideogamesG);
-      return { ...state, videogames: filteredGenres };
 
-    case FILTER_BY_ABC:
-
-      let filteredGames = [...state.allVideogames]; 
-      if (action.payload === "asc") {
-       
-        filteredGames.sort((a, b) => {
-          if (a.name > b.name) return 1;
-          if (a.name < b.name) return -1;
-          return 0;
-        });
-      } else if (action.payload === "des") {
-        
-        filteredGames.sort((a, b) => {
-          if (a.name > b.name) return -1;
-          if (a.name < b.name) return 1;
-          return 0;
-        });
-      }
-       
-      return { ...state, videogames: filteredGames };
-
-    case FILTER_BY_RATING:
-      let filteredGamesR = [...state.allVideogames.filter((r)=>r.rating)]
-
-      if(action.payload === 'min'){
-        filteredGamesR.sort((a,b) => {
-          return a.rating - b.rating
-        })
-      } else if (action.payload === 'max'){
-        filteredGamesR.sort((a,b) => {
-          return a.rating - b.rating;
-        }).reverse();
-      }
-      return {...state, videogames: filteredGamesR}
+      return {
+        ...state,
+        videogames: filteredGenres,
+      };
 
     default:
       return { ...state };

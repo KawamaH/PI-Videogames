@@ -1,0 +1,28 @@
+.input {
+    padding: 7px 30px 7px 10px;
+    width: 55%;
+    border: 1px solid #E8EAED;
+    border-radius: 3px;
+    background: white;
+    box-shadow: 0 1px 3px -2px #9098A9;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.button {
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-size: 12px;
+  justify-content: center;
+  line-height: 1em;
+  width: 90px;
+  padding: 10px;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: "Press Start 2P", sans-serif;
+}

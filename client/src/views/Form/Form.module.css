@@ -1,0 +1,93 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+  margin: 20px;
+  margin-top: 10px;
+  border-radius: 3px;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+.title {
+  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: #af40ff -3px -3px;
+}
+.button {
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-size: 10px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 250px;
+  max-height: 30px;
+  padding: 8px;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: "Press Start 2P", sans-serif;
+}
+.buttonHome {
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 400px;
+  padding: 20px;
+  margin-top: 10px;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: "Press Start 2P", sans-serif;
+}
+.buttonSubmit {
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 400px;
+  padding: 20px;
+  margin-top: 10px;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: "Press Start 2P", sans-serif;
+}
+.buttonSubmit :disabled {
+  background-color: black;
+}
+
+.formContainer {
+  margin: 50px;
+}
+.previewContainer {
+  margin: 50px;
+  color: #5b42f3;
+}
+
+.imagePreview {
+  max-width: 300px;
+}
+
+.errors {
+  color: rgb(156, 0, 0);
+}

@@ -22,8 +22,20 @@ const getAllVideogamesApi = async () => {
 
   const videogames = videogamesArray.flat();
   return videogames;
-
 };
+
+const getAllPlatforms = async() => {
+  const videogamesArray = await getAllVideogamesApi();
+  let platforms = [];
+
+  videogamesArray.forEach(plat => {
+    if (!platforms.includes(plat)) {
+      platforms.push(plat)
+    }
+  })
+  console.log(platforms)
+  return platforms;
+}
 
 const getAllVideogamesDb = async () => {
   const videogamesDb = await Videogame.findAll({
@@ -65,7 +77,7 @@ const getVideogameByIdBd = async (id) => {
       },
     },
   });
-  return videogame;
+  return [videogame];
 };
 
 const getVideogameByIdApi = async (id) => {
@@ -107,6 +119,7 @@ const getVideogameByNameApi = async (name) => {
       `https://api.rawg.io/api/games?key=${API_KEY}&search=${name}`
     )
   ).data.results;
+  console.log(apiResults)
   const apiResultsCleaned = await cleanArray(apiResults);
   return apiResultsCleaned;
 };
@@ -115,7 +128,7 @@ const createVideogame = async (
   name,
   description,
   platforms,
-  img,
+  image,
   released,
   rating,
   genre
@@ -134,7 +147,7 @@ const createVideogame = async (
     name: name,
     description: description,
     platforms: platforms,
-    img: img,
+    image: image,
     released: released,
     rating: rating,
     createInDb: true,
@@ -165,4 +178,5 @@ module.exports = {
   getVideogameByName,
   createVideogame,
   getAllVideogames,
+  getAllPlatforms,
 };

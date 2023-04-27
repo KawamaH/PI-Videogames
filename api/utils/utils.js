@@ -5,7 +5,7 @@ const cleanArray = async (videogamesRaw) => {
       name: elem.name,
       released: elem.released,
       image: elem.background_image,
-      platforms: elem.platforms.map((res) => res.platform.name + ""),
+      platforms: elem.platforms? elem.platforms.map((res) => res.platform.name + ""): 'null',
       genres: elem.genres.map((res) => res.name + ""),
       rating: elem.rating,
     };
