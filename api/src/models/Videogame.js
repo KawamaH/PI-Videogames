@@ -34,6 +34,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey:true,
     },
+    price:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     createinDb: {
       type: DataTypes.BOOLEAN,
       allowNull:false,

@@ -11,15 +11,14 @@ const getAllVideogamesHandler = async (req,res) => {
 }
 
 const createVideogameHandler = async (req,res) => {
-    const { name, description,platforms, image, released, rating, genres } = req.body
+    const { name, description,platforms, image, released, rating, genres, price } = req.body
     try {
-        if(!name || !description || !platforms || !image || !released || !rating || !genres){
+        if(!name || !description || !platforms || !image || !released || !rating || !genres || !price){
         throw Error ('Videogame information is missing')
         } else {
-            const newVideogame = await createVideogame(name,description,platforms,image,released,rating, genres)
+            const newVideogame = await createVideogame(name,description,platforms,image,released,rating, genres, price)
             res.status(200).json(newVideogame)
         }
-        
     } catch (error) {
         res.status(400).json({error: error.message});
     }

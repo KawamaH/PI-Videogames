@@ -8,34 +8,80 @@ const Op = sequelize.Op;
 const getAllGenres = require("./genresController.js");
 
 const getAllVideogamesApi = async () => {
-  let videogamesArray = []
+  let videogamesArray = [];
 
-  let url = (`https://api.rawg.io/api/games?key=${API_KEY}`)
+  let url = `https://api.rawg.io/api/games?key=${API_KEY}`;
 
-  for(var i=1;i<6;i++){
-    let videogamesApi = await axios.get(url)
-    url = (videogamesApi.data.next)
-    let data = (videogamesApi.data.results)
-    let cleanData = await cleanArray(data)
-    videogamesArray.push(cleanData)
+  for (var i = 1; i < 6; i++) {
+    let videogamesApi = await axios.get(url);
+    url = videogamesApi.data.next;
+    let data = videogamesApi.data.results;
+    let cleanData = await cleanArray(data);
+    videogamesArray.push(cleanData);
   }
 
-  const videogames = videogamesArray.flat();
-  return videogames;
+  // for (var i = 1; i < 6; i++) {
+  //   let videogamesApi = await axios.get(`${url}&page=${i}`);
+  //   let data = videogamesApi.data.results;
+  //   let cleanData = await cleanArray(data);
+  //   videogamesArray.push(cleanData);
+  // }
+
+  // const videogames = videogamesArray.flat();
+  // return videogames;
+
+  // const promise1 = axios.get(
+  //   `https://api.rawg.io/api/games?key=${API_KEY}&page=1`
+  // );
+  // const promise2 = axios.get(
+  //   `https://api.rawg.io/api/games?key=${API_KEY}&page=2`
+  // );
+  // const promise3 = axios.get(
+  //   `https://api.rawg.io/api/games?key=${API_KEY}&page=3`
+  // );
+  // const promise4 = axios.get(
+  //   `https://api.rawg.io/api/games?key=${API_KEY}&page=4`
+  // );
+  // const promise5 = axios.get(
+  //   `https://api.rawg.io/api/games?key=${API_KEY}&page=5`
+  // );
+
+  const promises = [];
+  for (let i = 1; i <= 5; i++) {
+    promises.push(
+      axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)
+    );
+  }
+  await Promise.all(promises).then(
+    function (values) {
+      apiResults = values[0].data.results
+        .concat(values[1].data.results)
+        .concat(values[2].data.results)
+        .concat(values[3].data.results)
+        .concat(values[4].data.results);
+    },
+    {
+      function(err) {
+        console.log(err);
+      },
+    }
+  );
+  cleanData = cleanArray(apiResults);
+  return cleanData;
 };
 
-const getAllPlatforms = async() => {
+const getAllPlatforms = async () => {
   const videogamesArray = await getAllVideogamesApi();
   let platforms = [];
 
-  videogamesArray.forEach(plat => {
+  videogamesArray.forEach((plat) => {
     if (!platforms.includes(plat)) {
-      platforms.push(plat)
+      platforms.push(plat);
     }
-  })
-  console.log(platforms)
+  });
+  console.log(platforms);
   return platforms;
-}
+};
 
 const getAllVideogamesDb = async () => {
   const videogamesDb = await Videogame.findAll({
@@ -119,7 +165,7 @@ const getVideogameByNameApi = async (name) => {
       `https://api.rawg.io/api/games?key=${API_KEY}&search=${name}`
     )
   ).data.results;
-  console.log(apiResults)
+  console.log(apiResults);
   const apiResultsCleaned = await cleanArray(apiResults);
   return apiResultsCleaned;
 };
@@ -131,7 +177,8 @@ const createVideogame = async (
   image,
   released,
   rating,
-  genre
+  genre,
+  price
 ) => {
   const videogamesDb = await Videogame.findAll({
     where: {
@@ -151,6 +198,7 @@ const createVideogame = async (
     released: released,
     rating: rating,
     createInDb: true,
+    price: price,
   });
 
   const genresDb = await Genre.count();
@@ -167,7 +215,7 @@ const createVideogame = async (
       return genreFounded;
     })
   );
-  
+
   await newVideogame.addGenre(genresFounded);
   return newVideogame;
 };
